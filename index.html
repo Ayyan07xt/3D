@@ -7,48 +7,48 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        :root { --gold: #D4AF37; --black: #1a1a1a; --bg: #fdfdfd; --accent: #ffefba; --gray: #93959f; --veg: #60b246; --nonveg: #ed4d4d; }
+        :root { --gold: #D4AF37; --black: #0a0a0a; --bg: #ffffff; --card: #f9f9f9; --glass: rgba(255, 255, 255, 0.8); }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: var(--black); overflow-x: hidden; }
 
-        /* SPLASH SCREEN ANIMATION */
-        #splash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--black); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .splash-img { width: 150px; position: absolute; }
+        /* PREMIUM 3D MOTION SPLASH */
+        #splash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--black); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: hidden; }
+        .s-img-3d { width: 250px; position: absolute; filter: drop-shadow(0 30px 50px rgba(0,0,0,0.9)); z-index: 5; }
+        .burger-3d { transform: translate3d(-100px, -50px, 0) rotate(-15deg); animation: premiumInLeft 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+        .pizza-3d { transform: translate3d(100px, 50px, 0) rotate(15deg); animation: premiumInRight 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
         
-        /* HEADER */
-        header { position: sticky; top: 0; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); padding: 15px; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 24px; font-weight: 900; }
-        .logo .genz { color: var(--black); }
-        .logo .foods { color: var(--gold); }
+        @keyframes premiumInLeft { 0% { opacity: 0; transform: scale(0.5) translateX(-200px); } 100% { opacity: 1; transform: scale(1) translateX(-30px); } }
+        @keyframes premiumInRight { 0% { opacity: 0; transform: scale(0.5) translateX(200px); } 100% { opacity: 1; transform: scale(1) translateX(30px); } }
 
-        /* CATEGORY TABS */
-        .cat-container { display: flex; gap: 10px; padding: 15px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
-        .cat-tab { padding: 10px 20px; border-radius: 50px; background: #fff; border: 1px solid #eee; font-weight: 600; font-size: 13px; cursor: pointer; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .cat-tab.active { background: var(--black); color: var(--gold); border-color: var(--black); }
+        header { position: sticky; top: 0; background: var(--glass); backdrop-filter: blur(15px); padding: 15px 20px; z-index: 1000; box-shadow: 0 4px 30px rgba(0,0,0,0.03); display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 26px; font-weight: 900; letter-spacing: -1px; }
+        .logo span { color: var(--gold); }
 
-        /* 3D HOTEL CARDS */
-        .hotel-list { padding: 0 15px; display: grid; gap: 25px; }
-        .hotel-card { background: #fff; border-radius: 30px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transform: translateY(0); transition: 0.4s; position: relative; }
-        .hotel-card:active { transform: scale(0.95) rotate(-1deg); }
-        .hotel-card img { width: 100%; height: 200px; object-fit: cover; }
-        .h-meta { padding: 20px; }
+        /* HOTEL CARDS */
+        .container { padding: 20px; }
+        .hotel-list { display: grid; grid-template-columns: 1fr; gap: 25px; padding-bottom: 120px; }
+        .hotel-card { background: #fff; border-radius: 35px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.06); border: 1px solid #f0f0f0; transition: 0.4s; }
+        .hotel-card img { width: 100%; height: 220px; object-fit: cover; }
+        .h-info { padding: 20px; position: relative; }
+        .rating { position: absolute; top: -25px; right: 25px; background: var(--gold); color: #fff; padding: 8px 18px; border-radius: 15px; font-weight: 800; box-shadow: 0 5px 15px rgba(212,175,55,0.3); }
+
+        /* DISH SECTION */
+        .dish-card { display: flex; background: #fff; margin-bottom: 15px; padding: 15px; border-radius: 25px; align-items: center; gap: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.02); border: 1px solid #f5f5f5; }
+        .dish-img { width: 100px; height: 100px; border-radius: 20px; object-fit: cover; }
+        .add-btn { background: var(--black); color: var(--gold); border: none; padding: 10px 20px; border-radius: 12px; font-weight: 800; font-size: 12px; cursor: pointer; transition: 0.2s; }
+        .add-btn:active { transform: scale(0.9); }
+
+        /* TOAST POPUP */
+        #toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--black); color: white; padding: 18px 25px; border-radius: 25px; display: none; width: 92%; justify-content: space-between; align-items: center; z-index: 2000; box-shadow: 0 10px 40px rgba(0,0,0,0.4); border: 1.5px solid var(--gold); }
+        .toast-go { background: var(--gold); color: #000; padding: 8px 15px; border-radius: 12px; font-size: 13px; font-weight: 900; cursor: pointer; }
+
+        /* BUTTONS */
+        .order-btn { width: 100%; background: #25D366; color: white; padding: 22px; border-radius: 25px; border: none; font-weight: 900; font-size: 18px; display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 30px; }
         
-        /* DISH CARDS (3D STYLE) */
-        .dish-card { display: flex; padding: 15px; margin: 15px; background: #fff; border-radius: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.04); align-items: center; gap: 15px; transition: 0.3s; border: 1px solid #f9f9f9; }
-        .dish-img-box { width: 100px; height: 100px; flex-shrink: 0; border-radius: 20px; overflow: hidden; }
-        .dish-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .type-dot { width: 10px; height: 10px; border-radius: 2px; border: 2px solid; margin-bottom: 5px; }
-
-        /* PAYMENT MODAL */
-        #payment-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: none; justify-content: center; align-items: center; padding: 20px; }
-        .qr-box { background: #fff; padding: 25px; border-radius: 30px; text-align: center; width: 100%; max-width: 350px; animation: zoomIn 0.3s; }
-        .qr-box img { width: 100%; border-radius: 15px; margin-bottom: 15px; }
-
-        /* FOOTER NAV */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #eee; z-index: 1000; }
-        .nav-item { color: #ccc; font-size: 11px; text-align: center; border: none; background: none; transition: 0.3s; }
-        .nav-item.active { color: var(--gold); transform: translateY(-5px); }
-        .nav-item i { font-size: 22px; display: block; margin-bottom: 3px; }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 20px 0; border-top: 1px solid #eee; z-index: 1000; box-shadow: 0 -10px 30px rgba(0,0,0,0.03); }
+        .nav-item { color: #ccc; text-align: center; border: none; background: none; font-size: 11px; font-weight: 600; }
+        .nav-item.active { color: var(--gold); }
+        .nav-item i { font-size: 24px; display: block; margin-bottom: 4px; }
 
         .hidden { display: none !important; }
     </style>
@@ -56,70 +56,76 @@
 <body>
 
     <div id="splash">
-        <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png" class="splash-img animate__animated animate__fadeInLeft" id="s1">
-        <img src="https://cdn-icons-png.flaticon.com/512/5973/5973307.png" class="splash-img animate__animated animate__fadeInRight" id="s2" style="margin-top: 150px;">
-        <h1 class="logo animate__animated animate__zoomIn" style="margin-top: 350px;">
-            <span class="genz" style="color:white">GenZ</span><span class="foods">foods</span>
-        </h1>
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500" class="s-img-3d burger-3d" style="border-radius: 50%;">
+        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500" class="s-img-3d pizza-3d" style="border-radius: 50%;">
+        <div class="animate__animated animate__fadeInUp animate__delay-1s" style="z-index:10; text-align:center;">
+            <h1 class="logo" style="color:white; font-size:45px;">GenZ<span>foods</span></h1>
+            <p style="color:var(--gold); font-weight:700; letter-spacing:4px;">AJARA PREMIUM</p>
+        </div>
     </div>
 
     <div id="main-app" class="hidden">
         <header>
-            <div class="logo"><span class="genz">GenZ</span><span class="foods">foods</span></div>
-            <div id="user-display" style="font-weight: 800;"></div>
+            <div class="logo">GenZ<span>foods</span></div>
+            <div id="user-info" style="font-weight:800; font-size:14px; color:var(--gold);">Hi, Guest 👋</div>
         </header>
 
-        <section id="home-page">
-            <div class="container animate__animated animate__fadeInUp" style="background: var(--black); border-radius: 25px; margin: 15px; padding: 25px; color: #fff;">
-                <h2 style="color: var(--gold); font-size: 28px;">GenZ Ajara ✨</h2>
-                <p>Taste the best at your door.</p>
+        <section id="home-page" class="container">
+            <div class="animate__animated animate__fadeIn" style="background:var(--black); padding:35px 25px; border-radius:35px; color:#fff; margin-bottom:30px; box-shadow:0 10px 30px rgba(0,0,0,0.2);">
+                <h2 style="color:var(--gold); font-size:32px; font-weight:900;">GenZ Ajara ✨</h2>
+                <p style="opacity:0.8; font-weight:500;">Taste the best at your door.</p>
             </div>
-
-            <div class="cat-container">
-                <div class="cat-tab active" onclick="app.filter('All', this)">All</div>
-                <div class="cat-tab" onclick="app.filter('Veg', this)">Pure Veg</div>
-                <div class="cat-tab" onclick="app.filter('NonVeg', this)">Non-Veg</div>
-                <div class="cat-tab" onclick="app.filter('Sweets', this)">Sweets</div>
-            </div>
-
-            <h3 class="section-title">Top Rated Hubs</h3>
+            
+            <h3 style="margin-bottom:20px; font-weight:900; font-size:24px;">Explore Top Hubs</h3>
             <div id="hotel-list" class="hotel-list"></div>
         </section>
 
         <section id="menu-page" class="hidden"></section>
 
         <section id="cart-page" class="container hidden">
-            <h2 class="section-title">Your Order Bag</h2>
-            <div id="cart-items" style="background:#fff; border-radius:25px; padding:20px; margin-bottom: 20px;"></div>
-            <textarea id="address" placeholder="Ghar ka full address..." style="width:100%; padding:15px; border-radius:15px; border:1px solid #eee; margin-bottom:20px;"></textarea>
-            <div id="total-bill" style="font-size: 24px; font-weight: 900; margin-bottom: 20px; text-align: right;"></div>
-            <button class="nav-item" style="width:100%; background:var(--black); color:var(--gold); padding:20px; border-radius:20px; font-weight:900; font-size:18px;" onclick="app.showPayment()">CONTINUE TO PAYMENT</button>
+            <h2 style="font-weight:900; font-size:28px; margin-bottom:20px;">Review Bag</h2>
+            <div id="cart-items" style="background:#fcfcfc; border-radius:30px; padding:20px; border:1px solid #eee;"></div>
+            <h4 style="margin-top:25px; font-weight:800;">Delivery Address</h4>
+            <textarea id="address" placeholder="Ghar ka address, Landmark aur Area likho..." style="width:100%; padding:20px; border-radius:20px; border:1.5px solid #eee; background:#fff; font-size:16px; margin-top:10px; height:120px;"></textarea>
+            <div id="total-val" style="font-size:30px; font-weight:900; text-align:right; margin:30px 0; color:var(--black);"></div>
+            <button class="order-btn" onclick="app.placeOrder()"><i class="fab fa-whatsapp"></i> SEND ORDER TO WHATSAPP</button>
         </section>
 
         <nav class="bottom-nav">
-            <button class="nav-item active" onclick="app.nav('home-page')"><i class="fa fa-fire"></i>Explore</button>
-            <button class="nav-item" onclick="app.nav('cart-page')"><i class="fa fa-shopping-basket"></i>Bag</button>
-            <button class="nav-item" onclick="app.logout()"><i class="fa fa-user-circle"></i>Exit</button>
+            <button class="nav-item active" onclick="app.nav('home-page')"><i class="fa-solid fa-house-chimney"></i>Home</button>
+            <button class="nav-item" onclick="app.nav('cart-page')"><i class="fa-solid fa-bag-shopping"></i>Bag</button>
+            <button class="nav-item" onclick="location.reload()"><i class="fa-solid fa-arrow-rotate-right"></i>Reload</button>
         </nav>
     </div>
 
-    <div id="payment-modal">
-        <div class="qr-box">
-            <h3 style="margin-bottom: 15px;">Scan & Pay to Confirm</h3>
-            <img src="https://i.postimg.cc/mD8Pz86D/1000121954.png" alt="UPI QR">
-            <p style="font-size: 13px; color: #777;">UPI ID: ayyantakildar83-1@oksbi</p>
-            <button onclick="app.placeOrder()" style="background:#25D366; color:#fff; border:none; width:100%; padding:15px; border-radius:15px; font-weight:bold; margin-top:20px;">CONFIRM ON WHATSAPP</button>
-            <button onclick="app.hidePayment()" style="margin-top:10px; color:red; border:none; background:none;">Cancel</button>
-        </div>
+    <div id="toast">
+        <span style="font-weight:700;">Added to Bag! 🛍️</span>
+        <div class="toast-go" onclick="app.nav('cart-page')">PLACE ORDER</div>
     </div>
 
     <script>
+        // 20 UNIQUE HOTELS WITH REAL IMAGES
         const HOTELS = [
-            { id: 1, name: "Burger Club", type: "NonVeg", img: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=600" },
-            { id: 2, name: "Veggie Delight", type: "Veg", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600" },
-            { id: 3, name: "Ajara Sweets", type: "Sweets", img: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600" },
-            { id: 4, name: "Pizza Hub", type: "Veg", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600" },
-            { id: 5, name: "Royal Biryani", type: "NonVeg", img: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=600" }
+            { id: 1, name: "Burger Club", img: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=600" },
+            { id: 2, name: "Pizza Palace", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600" },
+            { id: 3, name: "Biryani Point", img: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=600" },
+            { id: 4, name: "The Caffeine Hub", img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600" },
+            { id: 5, name: "Ajara Sweets", img: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600" },
+            { id: 6, name: "Roll Mania", img: "https://images.unsplash.com/photo-1534353436294-0dbd4bdac845?w=600" },
+            { id: 7, name: "Desi Dhaba", img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600" },
+            { id: 8, name: "Sushi House", img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600" },
+            { id: 9, name: "Waffle Wonders", img: "https://images.unsplash.com/photo-1562331750-5890e2d5363a?w=600" },
+            { id: 10, name: "Steak Grill", img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=600" },
+            { id: 11, name: "Momo Station", img: "https://images.unsplash.com/photo-1534422298391-e4f8c170db06?w=600" },
+            { id: 12, name: "Pasta Street", img: "https://images.unsplash.com/photo-1473093226795-af9932fe5856?w=600" },
+            { id: 13, name: "Fruit Juice Bar", img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600" },
+            { id: 14, name: "Royal Thali", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600" },
+            { id: 15, name: "Chai Sutta Hub", img: "https://images.unsplash.com/photo-1544787210-282aa747fd47?w=600" },
+            { id: 16, name: "The Bakery", img: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600" },
+            { id: 17, name: "South Flavors", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600" },
+            { id: 18, name: "Kabab Korner", img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=600" },
+            { id: 19, name: "Salad Garden", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600" },
+            { id: 20, name: "Creamy Scoops", img: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=600" }
         ];
 
         const app = {
@@ -127,44 +133,25 @@
             currentHotel: null,
 
             init() {
-                // Splash Timer
                 setTimeout(() => {
-                    document.getElementById('splash').classList.add('animate__animated', 'animate__fadeOut');
+                    document.getElementById('splash').classList.add('animate__fadeOut');
                     setTimeout(() => {
                         document.getElementById('splash').style.display = 'none';
                         document.getElementById('main-app').classList.remove('hidden');
-                        this.renderHotels('All');
+                        this.renderHotels();
                     }, 500);
-                }, 2500);
-
-                const u = localStorage.getItem('gz_user');
-                if(u) document.getElementById('user-display').innerText = `Hi, ${JSON.parse(u).n}`;
-                else this.askLogin();
+                }, 1800);
             },
 
-            askLogin() {
-                let n = prompt("Enter Name:");
-                if(n) {
-                    localStorage.setItem('gz_user', JSON.stringify({n}));
-                    location.reload();
-                }
-            },
-
-            filter(type, el) {
-                document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
-                el.classList.add('active');
-                this.renderHotels(type);
-            },
-
-            renderHotels(type) {
+            renderHotels() {
                 const list = document.getElementById('hotel-list');
-                const filtered = type === 'All' ? HOTELS : HOTELS.filter(h => h.type === type);
-                list.innerHTML = filtered.map(h => `
+                list.innerHTML = HOTELS.map(h => `
                     <div class="hotel-card animate__animated animate__fadeInUp" onclick="app.openMenu(${h.id})">
                         <img src="${h.img}">
-                        <div class="h-meta">
-                            <h4>${h.name}</h4>
-                            <p>${h.type} Speciality • Ajara</p>
+                        <div class="h-info">
+                            <span class="rating">★ 4.${(h.id%5)+4}</span>
+                            <h4 style="font-size:22px; font-weight:900;">${h.name}</h4>
+                            <p style="color:#888; font-size:14px; margin-top:5px;">Premium Ajara Experience</p>
                         </div>
                     </div>
                 `).join('');
@@ -175,62 +162,69 @@
                 this.currentHotel = hotel;
                 let dishes = "";
                 for(let i=1; i<=20; i++) {
-                    const isVeg = hotel.type === 'Veg' || hotel.type === 'Sweets';
+                    const price = 100 + (i*15);
                     dishes += `
                         <div class="dish-card">
-                            <div class="dish-img-box"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=200"></div>
-                            <div class="dish-info">
-                                <div class="type-dot" style="border-color:${isVeg?'green':'red'}"></div>
-                                <h4>Item #${i}</h4>
-                                <div class="price" style="color:var(--gold)">₹${100 + i*10}</div>
+                            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300" class="dish-img">
+                            <div style="flex:1">
+                                <h4 style="font-size:16px; font-weight:800;">${hotel.name.split(' ')[0]} Spec. #${i}</h4>
+                                <b style="color:var(--gold); font-size:18px;">₹${price}</b>
                             </div>
-                            <button class="add-btn" onclick="app.add('${hotel.name} Item ${i}', ${100 + i*10})">ADD +</button>
+                            <button class="add-btn" onclick="app.add('${hotel.name.split(' ')[0]} Item ${i}', ${price})">ADD +</button>
                         </div>
                     `;
                 }
                 document.getElementById('menu-page').innerHTML = `
-                    <div style="padding:20px; background:var(--black); color:white;">
-                        <h2 onclick="app.nav('home-page')"><i class="fa fa-arrow-left"></i> ${hotel.name}</h2>
+                    <div style="padding:25px; background:var(--black); color:white; border-radius:0 0 35px 35px;">
+                        <i class="fa fa-chevron-left" onclick="app.nav('home-page')" style="font-size:20px; color:var(--gold); margin-bottom:15px; display:block;"></i>
+                        <h2 style="font-size:28px; font-weight:900;">${hotel.name}</h2>
                     </div>
-                    ${dishes}
+                    <div class="container">${dishes}</div>
                 `;
                 this.nav('menu-page');
             },
 
             add(n, p) {
-                this.cart.push({n, p, q: 1, h: this.currentHotel.name});
-                alert("Added to Bag!");
+                this.cart.push({n, p, h: this.currentHotel.name});
+                const t = document.getElementById('toast');
+                t.style.display = 'flex';
+                setTimeout(() => t.style.display = 'none', 5000);
             },
 
             nav(id) {
-                ['home-page', 'menu-page', 'cart-page'].forEach(s => document.getElementById(s).classList.add('hidden'));
+                ['home-page', 'menu-page', 'cart-page'].forEach(p => document.getElementById(p).classList.add('hidden'));
                 document.getElementById(id).classList.remove('hidden');
+                if(id === 'cart-page') this.renderCart();
+                window.scrollTo(0,0);
             },
 
-            showPayment() {
-                if(this.cart.length === 0) return alert("Bag is empty!");
-                document.getElementById('payment-modal').style.display = 'flex';
+            renderCart() {
+                const box = document.getElementById('cart-items');
+                const val = document.getElementById('total-val');
+                if(this.cart.length === 0) { box.innerHTML = "<p style='text-align:center; padding:20px;'>Bag is empty!</p>"; val.innerHTML = ""; return; }
+                box.innerHTML = this.cart.map((item, i) => `
+                    <div style="display:flex; justify-content:space-between; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+                        <div><b>${item.n}</b><br><small style="color:#777;">${item.h}</small></div>
+                        <b style="font-size:16px;">₹${item.p} <i class="fa fa-trash-can" style="color:red; margin-left:12px;" onclick="app.remove(${i})"></i></b>
+                    </div>
+                `).join('');
+                val.innerText = `Total: ₹${this.cart.reduce((s, i) => s + i.p, 0)}`;
             },
 
-            hidePayment() { document.getElementById('payment-modal').style.display = 'none'; },
+            remove(i) { this.cart.splice(i, 1); this.renderCart(); },
 
             placeOrder() {
-                const user = JSON.parse(localStorage.getItem('gz_user'));
                 const addr = document.getElementById('address').value;
-                if(!addr) return alert("Address please!");
-
-                navigator.geolocation.getCurrentPosition(pos => {
-                    const loc = `https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}`;
-                    const items = this.cart.map(i => `${i.n} (₹${i.p})`).join('\n');
-                    const msg = `*GenZfoods Ajara*\n---\n*Customer:* ${user.n}\n*Order:*\n${items}\n\n*Address:* ${addr}\n*Location:* ${loc}\n*Payment:* DONE via QR`;
-                    window.open(`https://wa.me/917757007795?text=${encodeURIComponent(msg)}`);
-                });
-            },
-
-            logout() { localStorage.clear(); location.reload(); }
+                if(!addr) return alert("Bhai please address likho!");
+                const items = this.cart.map(i => `• ${i.n} (${i.h})`).join('\n');
+                const total = this.cart.reduce((s, i) => s + i.p, 0);
+                const msg = `*GenZfoods Ajara Order*\n---\n*Items:*\n${items}\n\n*Total:* ₹${total}\n*Address:* ${addr}\n\n_Send me QR for payment!_`;
+                window.open(`https://wa.me/917757007795?text=${encodeURIComponent(msg)}`);
+            }
         };
 
         app.init();
     </script>
 </body>
 </html>
+
