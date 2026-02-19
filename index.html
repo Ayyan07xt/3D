@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GenZfoods | Ajara Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root { --gold: #D4AF37; --black: #1a1a1a; --bg: #fdfdfd; --accent: #ffefba; --gray: #93959f; --veg: #60b246; --nonveg: #ed4d4d; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg); color: var(--black); overflow-x: hidden; }
+
+        /* SPLASH SCREEN ANIMATION */
+        #splash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--black); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .splash-img { width: 150px; position: absolute; }
+        
+        /* HEADER */
+        header { position: sticky; top: 0; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); padding: 15px; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: 900; }
+        .logo .genz { color: var(--black); }
+        .logo .foods { color: var(--gold); }
+
+        /* CATEGORY TABS */
+        .cat-container { display: flex; gap: 10px; padding: 15px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+        .cat-tab { padding: 10px 20px; border-radius: 50px; background: #fff; border: 1px solid #eee; font-weight: 600; font-size: 13px; cursor: pointer; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .cat-tab.active { background: var(--black); color: var(--gold); border-color: var(--black); }
+
+        /* 3D HOTEL CARDS */
+        .hotel-list { padding: 0 15px; display: grid; gap: 25px; }
+        .hotel-card { background: #fff; border-radius: 30px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transform: translateY(0); transition: 0.4s; position: relative; }
+        .hotel-card:active { transform: scale(0.95) rotate(-1deg); }
+        .hotel-card img { width: 100%; height: 200px; object-fit: cover; }
+        .h-meta { padding: 20px; }
+        
+        /* DISH CARDS (3D STYLE) */
+        .dish-card { display: flex; padding: 15px; margin: 15px; background: #fff; border-radius: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.04); align-items: center; gap: 15px; transition: 0.3s; border: 1px solid #f9f9f9; }
+        .dish-img-box { width: 100px; height: 100px; flex-shrink: 0; border-radius: 20px; overflow: hidden; }
+        .dish-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .type-dot { width: 10px; height: 10px; border-radius: 2px; border: 2px solid; margin-bottom: 5px; }
+
+        /* PAYMENT MODAL */
+        #payment-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: none; justify-content: center; align-items: center; padding: 20px; }
+        .qr-box { background: #fff; padding: 25px; border-radius: 30px; text-align: center; width: 100%; max-width: 350px; animation: zoomIn 0.3s; }
+        .qr-box img { width: 100%; border-radius: 15px; margin-bottom: 15px; }
+
+        /* FOOTER NAV */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #eee; z-index: 1000; }
+        .nav-item { color: #ccc; font-size: 11px; text-align: center; border: none; background: none; transition: 0.3s; }
+        .nav-item.active { color: var(--gold); transform: translateY(-5px); }
+        .nav-item i { font-size: 22px; display: block; margin-bottom: 3px; }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div id="splash">
+        <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png" class="splash-img animate__animated animate__fadeInLeft" id="s1">
+        <img src="https://cdn-icons-png.flaticon.com/512/5973/5973307.png" class="splash-img animate__animated animate__fadeInRight" id="s2" style="margin-top: 150px;">
+        <h1 class="logo animate__animated animate__zoomIn" style="margin-top: 350px;">
+            <span class="genz" style="color:white">GenZ</span><span class="foods">foods</span>
+        </h1>
+    </div>
+
+    <div id="main-app" class="hidden">
+        <header>
+            <div class="logo"><span class="genz">GenZ</span><span class="foods">foods</span></div>
+            <div id="user-display" style="font-weight: 800;"></div>
+        </header>
+
+        <section id="home-page">
+            <div class="container animate__animated animate__fadeInUp" style="background: var(--black); border-radius: 25px; margin: 15px; padding: 25px; color: #fff;">
+                <h2 style="color: var(--gold); font-size: 28px;">GenZ Ajara ✨</h2>
+                <p>Taste the best at your door.</p>
+            </div>
+
+            <div class="cat-container">
+                <div class="cat-tab active" onclick="app.filter('All', this)">All</div>
+                <div class="cat-tab" onclick="app.filter('Veg', this)">Pure Veg</div>
+                <div class="cat-tab" onclick="app.filter('NonVeg', this)">Non-Veg</div>
+                <div class="cat-tab" onclick="app.filter('Sweets', this)">Sweets</div>
+            </div>
+
+            <h3 class="section-title">Top Rated Hubs</h3>
+            <div id="hotel-list" class="hotel-list"></div>
+        </section>
+
+        <section id="menu-page" class="hidden"></section>
+
+        <section id="cart-page" class="container hidden">
+            <h2 class="section-title">Your Order Bag</h2>
+            <div id="cart-items" style="background:#fff; border-radius:25px; padding:20px; margin-bottom: 20px;"></div>
+            <textarea id="address" placeholder="Ghar ka full address..." style="width:100%; padding:15px; border-radius:15px; border:1px solid #eee; margin-bottom:20px;"></textarea>
+            <div id="total-bill" style="font-size: 24px; font-weight: 900; margin-bottom: 20px; text-align: right;"></div>
+            <button class="nav-item" style="width:100%; background:var(--black); color:var(--gold); padding:20px; border-radius:20px; font-weight:900; font-size:18px;" onclick="app.showPayment()">CONTINUE TO PAYMENT</button>
+        </section>
+
+        <nav class="bottom-nav">
+            <button class="nav-item active" onclick="app.nav('home-page')"><i class="fa fa-fire"></i>Explore</button>
+            <button class="nav-item" onclick="app.nav('cart-page')"><i class="fa fa-shopping-basket"></i>Bag</button>
+            <button class="nav-item" onclick="app.logout()"><i class="fa fa-user-circle"></i>Exit</button>
+        </nav>
+    </div>
+
+    <div id="payment-modal">
+        <div class="qr-box">
+            <h3 style="margin-bottom: 15px;">Scan & Pay to Confirm</h3>
+            <img src="https://i.postimg.cc/mD8Pz86D/1000121954.png" alt="UPI QR">
+            <p style="font-size: 13px; color: #777;">UPI ID: ayyantakildar83-1@oksbi</p>
+            <button onclick="app.placeOrder()" style="background:#25D366; color:#fff; border:none; width:100%; padding:15px; border-radius:15px; font-weight:bold; margin-top:20px;">CONFIRM ON WHATSAPP</button>
+            <button onclick="app.hidePayment()" style="margin-top:10px; color:red; border:none; background:none;">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        const HOTELS = [
+            { id: 1, name: "Burger Club", type: "NonVeg", img: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=600" },
+            { id: 2, name: "Veggie Delight", type: "Veg", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600" },
+            { id: 3, name: "Ajara Sweets", type: "Sweets", img: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600" },
+            { id: 4, name: "Pizza Hub", type: "Veg", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600" },
+            { id: 5, name: "Royal Biryani", type: "NonVeg", img: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=600" }
+        ];
+
+        const app = {
+            cart: [],
+            currentHotel: null,
+
+            init() {
+                // Splash Timer
+                setTimeout(() => {
+                    document.getElementById('splash').classList.add('animate__animated', 'animate__fadeOut');
+                    setTimeout(() => {
+                        document.getElementById('splash').style.display = 'none';
+                        document.getElementById('main-app').classList.remove('hidden');
+                        this.renderHotels('All');
+                    }, 500);
+                }, 2500);
+
+                const u = localStorage.getItem('gz_user');
+                if(u) document.getElementById('user-display').innerText = `Hi, ${JSON.parse(u).n}`;
+                else this.askLogin();
+            },
+
+            askLogin() {
+                let n = prompt("Enter Name:");
+                if(n) {
+                    localStorage.setItem('gz_user', JSON.stringify({n}));
+                    location.reload();
+                }
+            },
+
+            filter(type, el) {
+                document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+                el.classList.add('active');
+                this.renderHotels(type);
+            },
+
+            renderHotels(type) {
+                const list = document.getElementById('hotel-list');
+                const filtered = type === 'All' ? HOTELS : HOTELS.filter(h => h.type === type);
+                list.innerHTML = filtered.map(h => `
+                    <div class="hotel-card animate__animated animate__fadeInUp" onclick="app.openMenu(${h.id})">
+                        <img src="${h.img}">
+                        <div class="h-meta">
+                            <h4>${h.name}</h4>
+                            <p>${h.type} Speciality • Ajara</p>
+                        </div>
+                    </div>
+                `).join('');
+            },
+
+            openMenu(id) {
+                const hotel = HOTELS.find(h => h.id == id);
+                this.currentHotel = hotel;
+                let dishes = "";
+                for(let i=1; i<=20; i++) {
+                    const isVeg = hotel.type === 'Veg' || hotel.type === 'Sweets';
+                    dishes += `
+                        <div class="dish-card">
+                            <div class="dish-img-box"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=200"></div>
+                            <div class="dish-info">
+                                <div class="type-dot" style="border-color:${isVeg?'green':'red'}"></div>
+                                <h4>Item #${i}</h4>
+                                <div class="price" style="color:var(--gold)">₹${100 + i*10}</div>
+                            </div>
+                            <button class="add-btn" onclick="app.add('${hotel.name} Item ${i}', ${100 + i*10})">ADD +</button>
+                        </div>
+                    `;
+                }
+                document.getElementById('menu-page').innerHTML = `
+                    <div style="padding:20px; background:var(--black); color:white;">
+                        <h2 onclick="app.nav('home-page')"><i class="fa fa-arrow-left"></i> ${hotel.name}</h2>
+                    </div>
+                    ${dishes}
+                `;
+                this.nav('menu-page');
+            },
+
+            add(n, p) {
+                this.cart.push({n, p, q: 1, h: this.currentHotel.name});
+                alert("Added to Bag!");
+            },
+
+            nav(id) {
+                ['home-page', 'menu-page', 'cart-page'].forEach(s => document.getElementById(s).classList.add('hidden'));
+                document.getElementById(id).classList.remove('hidden');
+            },
+
+            showPayment() {
+                if(this.cart.length === 0) return alert("Bag is empty!");
+                document.getElementById('payment-modal').style.display = 'flex';
+            },
+
+            hidePayment() { document.getElementById('payment-modal').style.display = 'none'; },
+
+            placeOrder() {
+                const user = JSON.parse(localStorage.getItem('gz_user'));
+                const addr = document.getElementById('address').value;
+                if(!addr) return alert("Address please!");
+
+                navigator.geolocation.getCurrentPosition(pos => {
+                    const loc = `https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}`;
+                    const items = this.cart.map(i => `${i.n} (₹${i.p})`).join('\n');
+                    const msg = `*GenZfoods Ajara*\n---\n*Customer:* ${user.n}\n*Order:*\n${items}\n\n*Address:* ${addr}\n*Location:* ${loc}\n*Payment:* DONE via QR`;
+                    window.open(`https://wa.me/917757007795?text=${encodeURIComponent(msg)}`);
+                });
+            },
+
+            logout() { localStorage.clear(); location.reload(); }
+        };
+
+        app.init();
+    </script>
+</body>
+</html>
