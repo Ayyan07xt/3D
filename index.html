@@ -9,78 +9,116 @@
     <style>
         :root { --gold: #D4AF37; --black: #050505; --bg: #ffffff; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg); color: var(--black); overflow-x: hidden; }
+
+        /* --- PREMIUM 3D SPLASH --- */
+        #splash { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: var(--black); z-index: 9999; 
+            display: flex; justify-content: center; align-items: center; overflow: hidden; 
+        }
         
-        /* PREMIUM PNG SPLASH ANIMATION */
-        #splash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--black); z-index: 9999; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        .png-container { position: absolute; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
         
         .png-food { 
-            width: 200px; 
-            height: auto;
-            position: absolute; 
-            filter: drop-shadow(0 20px 50px rgba(212,175,55,0.4)); 
-            z-index: 10; 
-            opacity: 0;
-            pointer-events: none;
+            width: 250px; height: auto; position: absolute; 
+            filter: drop-shadow(0 0 30px rgba(212,175,55,0.6)); 
+            z-index: 10; opacity: 0; 
         }
         
-        /* Smooth Glide Animation */
-        .burger-png { 
-            animation: glideLeft 2.2s ease-in-out forwards; 
-        }
-        .pizza-png { 
-            animation: glideRight 2.2s ease-in-out forwards; 
-        }
+        /* Smooth High-End Animation */
+        .burger-png { animation: premiumGlideLeft 2.5s ease-in-out forwards; }
+        .pizza-png { animation: premiumGlideRight 2.5s ease-in-out forwards; }
         
         .splash-logo { 
-            opacity: 0; 
-            animation: logoFadeUp 1.2s 1.8s ease-out forwards; 
-            text-align: center; 
-            z-index: 20; 
+            opacity: 0; text-align: center; z-index: 20;
+            animation: logoFadeIn 1.5s 2s ease-out forwards;
         }
 
-        @keyframes glideLeft { 
-            0% { transform: translate(-150%, -20%) rotate(-30deg) scale(0.6); opacity: 0; }
-            40% { opacity: 1; transform: translate(0, 0) rotate(0) scale(1.1); }
-            60% { opacity: 1; transform: translate(0, 0) rotate(0) scale(1.1); }
-            100% { transform: translate(150%, 20%) rotate(30deg) scale(0.6); opacity: 0; } 
+        @keyframes premiumGlideLeft { 
+            0% { transform: translate(-180%, -30%) rotate(-40deg) scale(0.5); opacity: 0; }
+            40%, 60% { opacity: 1; transform: translate(0, 0) rotate(0) scale(1.2); }
+            100% { transform: translate(180%, 30%) rotate(40deg) scale(0.5); opacity: 0; } 
         }
-        @keyframes glideRight { 
-            0% { transform: translate(150%, 20%) rotate(30deg) scale(0.6); opacity: 0; }
-            40% { opacity: 1; transform: translate(0, 0) rotate(0) scale(1.1); }
-            60% { opacity: 1; transform: translate(0, 0) rotate(0) scale(1.1); }
-            100% { transform: translate(-150%, -20%) rotate(-30deg) scale(0.6); opacity: 0; } 
+        @keyframes premiumGlideRight { 
+            0% { transform: translate(180%, 30%) rotate(40deg) scale(0.5); opacity: 0; }
+            40%, 60% { opacity: 1; transform: translate(0, 0) rotate(0) scale(1.2); }
+            100% { transform: translate(-180%, -30%) rotate(-40deg) scale(0.5); opacity: 0; } 
         }
-        @keyframes logoFadeUp { 
-            0% { opacity: 0; transform: translateY(30px) scale(0.9); }
-            100% { opacity: 1; transform: translateY(0) scale(1); } 
+        @keyframes logoFadeIn { 
+            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); } 
         }
 
-        /* MAIN UI */
-        header { position: sticky; top: 0; background: rgba(255,255,255,0.96); backdrop-filter: blur(10px); padding: 15px 20px; z-index: 1000; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; }
+        /* --- MAIN APP UI --- */
+        header { 
+            position: sticky; top: 0; background: rgba(255,255,255,0.98); 
+            backdrop-filter: blur(15px); padding: 15px 20px; z-index: 1000; 
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #f0f0f0;
+        }
         .logo { font-size: 24px; font-weight: 900; }
         .logo span { color: var(--gold); }
 
-        .container { padding: 15px; }
-        .hotel-card { background: #fff; border-radius: 25px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #eee; }
-        .hotel-card img { width: 100%; height: 180px; object-fit: cover; }
-        .h-info { padding: 15px; position: relative; }
-        .rating { position: absolute; top: -15px; right: 15px; background: var(--gold); color: white; padding: 4px 10px; border-radius: 10px; font-weight: 800; font-size: 11px; }
+        .container { padding: 20px; }
+        
+        /* HOTEL CARDS - NO ERROR DESIGN */
+        .hotel-list { display: grid; gap: 25px; padding-bottom: 120px; }
+        .hotel-card { 
+            background: #fff; border-radius: 30px; overflow: hidden; 
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08); border: 1px solid #f0f0f0;
+            transition: transform 0.3s;
+        }
+        .hotel-card:active { transform: scale(0.97); }
+        .hotel-img-wrapper { width: 100%; height: 210px; background: #eee; overflow: hidden; }
+        .hotel-card img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .h-info { padding: 18px; position: relative; }
+        .rating-badge { 
+            position: absolute; top: -20px; right: 20px; 
+            background: var(--gold); color: #fff; padding: 6px 14px; 
+            border-radius: 12px; font-weight: 800; font-size: 13px;
+        }
 
-        .dish-card { display: flex; padding: 12px; margin-bottom: 12px; background: #fff; border-radius: 20px; align-items: center; gap: 12px; border: 1px solid #f0f0f0; }
-        .dish-img { width: 80px; height: 80px; border-radius: 15px; object-fit: cover; }
-        .add-btn { background: var(--black); color: var(--gold); border: none; padding: 8px 15px; border-radius: 10px; font-weight: 800; cursor: pointer; }
+        /* DISH CARDS */
+        .dish-card { 
+            display: flex; padding: 15px; margin-bottom: 15px; background: #fff; 
+            border-radius: 25px; align-items: center; gap: 15px; border: 1px solid #f5f5f5;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+        .dish-img { width: 90px; height: 90px; border-radius: 20px; object-fit: cover; background: #eee; }
+        .add-btn { background: var(--black); color: var(--gold); border: none; padding: 10px 18px; border-radius: 12px; font-weight: 800; }
 
-        /* TOAST */
-        #toast { position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%); background: #111; color: white; padding: 15px 20px; border-radius: 18px; display: none; width: 92%; justify-content: space-between; align-items: center; z-index: 2000; border: 1px solid var(--gold); }
-        .toast-btn { background: var(--gold); color: #000; padding: 8px 15px; border-radius: 10px; font-weight: 900; }
+        /* CART & CHECKOUT */
+        #cart-page { padding-bottom: 130px; }
+        .order-btn { 
+            width: 100%; background: #25D366; color: white; padding: 20px; 
+            border-radius: 25px; border: none; font-weight: 900; font-size: 18px; 
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            margin-top: 25px;
+        }
+        textarea { 
+            width: 100%; padding: 18px; border-radius: 20px; border: 1.5px solid #eee; 
+            font-size: 16px; margin-top: 10px; height: 110px; outline: none; background: #fafafa;
+        }
 
-        .order-btn { width: 100%; background: #25D366; color: white; padding: 18px; border-radius: 20px; border: none; font-weight: 900; font-size: 18px; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        textarea { width: 100%; padding: 15px; border-radius: 15px; border: 1px solid #ddd; font-size: 16px; margin-top: 10px; height: 100px; outline: none; }
-
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #eee; z-index: 1000; }
-        .nav-item { color: #ccc; text-align: center; border: none; background: none; font-size: 11px; }
+        /* NAVIGATION */
+        .bottom-nav { 
+            position: fixed; bottom: 0; width: 100%; background: #fff; 
+            display: flex; justify-content: space-around; padding: 18px 0; 
+            border-top: 1px solid #f0f0f0; z-index: 1000; box-shadow: 0 -5px 20px rgba(0,0,0,0.03);
+        }
+        .nav-item { color: #bbb; text-align: center; border: none; background: none; font-size: 12px; font-weight: 600; }
         .nav-item.active { color: var(--gold); }
-        .nav-item i { font-size: 22px; display: block; margin-bottom: 2px; }
+        .nav-item i { font-size: 24px; display: block; margin-bottom: 4px; }
+
+        #toast { 
+            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); 
+            background: #111; color: white; padding: 18px 25px; border-radius: 25px; 
+            display: none; width: 90%; justify-content: space-between; align-items: center; 
+            z-index: 2000; border: 1px solid var(--gold); box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        .toast-go { background: var(--gold); color: #000; padding: 8px 15px; border-radius: 12px; font-weight: 900; }
 
         .hidden { display: none !important; }
     </style>
@@ -88,79 +126,103 @@
 <body>
 
     <div id="splash">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Hamburger_%28black_bg%29.png" class="png-food burger-png">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Pizza_quattro_formaggi_transparent.png/600px-Pizza_quattro_formaggi_transparent.png" class="png-food pizza-png">
+        <div class="png-container">
+            <img src="https://www.pngall.com/wp-content/uploads/2016/05/Burger-PNG-File.png" class="png-food burger-png" id="b-png">
+            <img src="https://www.pngall.com/wp-content/uploads/2016/05/Pizza-PNG-Transparent-Image.png" class="png-food pizza-png" id="p-png">
+        </div>
         
         <div class="splash-logo">
-            <h1 style="color:white; font-size:42px; font-weight:900;">GenZ<span style="color:var(--gold)">foods</span></h1>
-            <p style="color:var(--gold); letter-spacing:8px; font-weight:700;">AJARA</p>
+            <h1 style="color:white; font-size:45px; font-weight:900;">GenZ<span style="color:var(--gold)">foods</span></h1>
+            <p style="color:var(--gold); letter-spacing:10px; font-weight:700; font-size:14px;">AJARA PREMIUM</p>
         </div>
     </div>
 
     <div id="main-app" class="hidden">
         <header>
             <div class="logo">GenZ<span>foods</span></div>
-            <div style="font-size: 11px; font-weight: 800; color: var(--gold);">PREMIUM HUB</div>
+            <div id="status" style="font-size:11px; font-weight:800; background:rgba(212,175,55,0.1); color:var(--gold); padding:5px 12px; border-radius:10px;">AJARA, MH</div>
         </header>
 
         <section id="home-page" class="container">
-            <div style="background:var(--black); padding:30px 20px; border-radius:30px; color:white; margin-bottom:20px;">
-                <h2 style="color:var(--gold); font-size:28px;">Ajara Selection ✨</h2>
-                <p style="opacity:0.8;">Premium quality, fast delivery.</p>
+            <div style="background:var(--black); padding:35px 25px; border-radius:35px; color:white; margin-bottom:30px;">
+                <h2 style="color:var(--gold); font-size:30px; font-weight:900;">GenZ Ajara ✨</h2>
+                <p style="opacity:0.8; font-size:15px;">Your favorite food, delivered with class.</p>
             </div>
-            <h3 style="margin-bottom:15px; font-weight:900;">20 Premium Cafes & Hotels</h3>
-            <div id="hotel-list"></div>
+            
+            <h3 style="margin-bottom:20px; font-weight:900; font-size:22px;">Premium Hubs (20)</h3>
+            <div id="hotel-list" class="hotel-list"></div>
         </section>
 
         <section id="menu-page" class="hidden"></section>
 
         <section id="cart-page" class="container hidden">
-            <h2 style="font-weight:900; margin-bottom:15px;">Your Bag</h2>
-            <div id="cart-items" style="background:#f9f9f9; border-radius:20px; padding:15px;"></div>
-            <h4 style="margin-top:20px;">Address Details</h4>
-            <textarea id="address" placeholder="Bhai full address aur landmark likho..."></textarea>
-            <div id="total-val" style="font-size:28px; font-weight:900; text-align:right; margin:20px 0;"></div>
-            <button class="order-btn" onclick="app.placeOrder()"><i class="fab fa-whatsapp"></i> PLACE ORDER ON WHATSAPP</button>
+            <h2 style="font-weight:900; font-size:26px; margin-bottom:20px;">Review Order</h2>
+            <div id="cart-items" style="background:#fcfcfc; border-radius:25px; padding:20px; border:1px solid #eee;"></div>
+            
+            <h4 style="margin-top:25px; font-weight:800;">Delivery Address</h4>
+            <textarea id="address" placeholder="Ghar ka no, Landmark aur Area likho..."></textarea>
+            
+            <div id="total-val" style="font-size:32px; font-weight:900; text-align:right; margin:25px 0; color:var(--black);"></div>
+            <button class="order-btn" onclick="app.placeOrder()"><i class="fab fa-whatsapp"></i> PLACE ORDER VIA WHATSAPP</button>
         </section>
 
         <nav class="bottom-nav">
-            <button class="nav-item active" onclick="app.nav('home-page')"><i class="fa fa-home"></i>Home</button>
-            <button class="nav-item" onclick="app.nav('cart-page')"><i class="fa fa-shopping-bag"></i>Bag</button>
-            <button class="nav-item" onclick="location.reload()"><i class="fa fa-refresh"></i>Refresh</button>
+            <button class="nav-item active" onclick="app.nav('home-page')"><i class="fa-solid fa-house"></i>Home</button>
+            <button class="nav-item" onclick="app.nav('cart-page')"><i class="fa-solid fa-bag-shopping"></i>Bag</button>
+            <button class="nav-item" onclick="location.reload()"><i class="fa-solid fa-rotate"></i>Refresh</button>
         </nav>
     </div>
 
     <div id="toast">
-        <span style="font-weight:700;">Added to Bag!</span>
-        <div class="toast-btn" onclick="app.nav('cart-page')">GO TO BAG</div>
+        <span style="font-weight:700;">Item Added! 🛍️</span>
+        <div class="toast-go" onclick="app.nav('cart-page')">GO TO BAG</div>
     </div>
 
     <script>
-        const HOTELS = Array.from({length: 20}, (_, i) => ({
-            id: i+1,
-            name: ["Burger Club", "Pizza Palace", "Biryani Art", "The Coffee Hub", "Roll Mania", "Sweet Sin", "Desi Dhaba", "Sushi House", "Waffle World", "Grill Steak", "Momo Point", "Pasta Hub", "Juice Bar", "Royal Thali", "Chai Sutta", "The Bakery", "South Hub", "Kabab Korner", "Salad Bar", "Ice Creamy"][i % 20],
-            img: `https://images.unsplash.com/photo-${[1571091718767, 1513104890138, 1589302168068, 1509042239860, 1534353436294][i % 5]}?w=500`
-        }));
+        // 20 HOTELS WITH VERIFIED STABLE LINKS
+        const HOTELS = [
+            { id: 1, name: "The Burger Club", cat: "Burgers & Sides", img: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=600&q=80" },
+            { id: 2, name: "Pizza Palace", cat: "Italian Premium", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&q=80" },
+            { id: 3, name: "Biryani Art", cat: "Hyderabadi Special", img: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=600&q=80" },
+            { id: 4, name: "Cafe Caffeine", cat: "Coffee & Desserts", img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80" },
+            { id: 5, name: "Ajara Sweet Mart", cat: "Pure Ghee Sweets", img: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&q=80" },
+            { id: 6, name: "Roll Express", cat: "Kathi & Shawarma", img: "https://images.unsplash.com/photo-1534353436294-0dbd4bdac845?w=600&q=80" },
+            { id: 7, name: "Dhaba 2.0", cat: "Punjabi Tadka", img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600&q=80" },
+            { id: 8, name: "Sushi House", cat: "Japanese Fusion", img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600&q=80" },
+            { id: 9, name: "Waffle Wonders", cat: "Belgium Waffles", img: "https://images.unsplash.com/photo-1562331750-5890e2d5363a?w=600&q=80" },
+            { id: 10, name: "Grill Station", cat: "Tandoori & Grills", img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80" },
+            { id: 11, name: "Momo Point", cat: "Chinese & Momos", img: "https://images.unsplash.com/photo-1534422298391-e4f8c170db06?w=600&q=80" },
+            { id: 12, name: "Pasta Street", cat: "Authentic Italian", img: "https://images.unsplash.com/photo-1473093226795-af9932fe5856?w=600&q=80" },
+            { id: 13, name: "Juice Factory", cat: "Fresh & Healthy", img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600&q=80" },
+            { id: 14, name: "Royal Thali", cat: "Maharashtrian Thali", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&q=80" },
+            { id: 15, name: "Chai Hub", cat: "Premium Tea", img: "https://images.unsplash.com/photo-1544787210-282aa747fd47?w=600&q=80" },
+            { id: 16, name: "Golden Bakery", cat: "Cakes & Pastries", img: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80" },
+            { id: 17, name: "South Hub", cat: "Dosa & Idli", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600&q=80" },
+            { id: 18, name: "Kabab Korner", cat: "Lucknowi Kababs", img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=600&q=80" },
+            { id: 19, name: "Salad Garden", cat: "Low Calorie", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80" },
+            { id: 20, name: "Ice Creamy", cat: "Gourmet Scoops", img: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=600&q=80" }
+        ];
 
         const app = {
             cart: [],
             currentHotel: null,
-            loc: "Fetching location...",
+            userLoc: "Fetching...",
 
             init() {
-                this.getLoc();
+                this.getLocation();
+                // 4.5 Seconds Delay to show hard work & animation properly
                 setTimeout(() => {
                     document.getElementById('splash').style.display = 'none';
                     document.getElementById('main-app').classList.remove('hidden');
                     this.renderHotels();
-                }, 4000); // 4 Seconds to enjoy animation
+                }, 4500);
             },
 
-            getLoc() {
-                if(navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(p => {
-                        this.loc = `https://www.google.com/maps?q=${p.coords.latitude},${p.coords.longitude}`;
-                    }, () => { this.loc = "Location Denied"; });
+            getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(pos => {
+                        this.userLoc = `https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}`;
+                    }, () => { this.userLoc = "Location Permission Denied"; });
                 }
             },
 
@@ -168,11 +230,13 @@
                 const list = document.getElementById('hotel-list');
                 list.innerHTML = HOTELS.map(h => `
                     <div class="hotel-card animate__animated animate__fadeInUp" onclick="app.openMenu(${h.id})">
-                        <img src="${h.img}">
+                        <div class="hotel-img-wrapper">
+                            <img src="${h.img}" loading="lazy">
+                        </div>
                         <div class="h-info">
-                            <span class="rating">★ 4.${(h.id%5)+4}</span>
-                            <h4 style="font-weight:900;">${h.name}</h4>
-                            <p style="font-size:12px; color:#777;">Premium Food Hub</p>
+                            <span class="rating-badge">★ 4.${(h.id % 5) + 4}</span>
+                            <h4 style="font-size:20px; font-weight:900;">${h.name}</h4>
+                            <p style="color:#777; font-size:13px;">${h.cat}</p>
                         </div>
                     </div>
                 `).join('');
@@ -183,22 +247,22 @@
                 this.currentHotel = hotel;
                 let dishes = "";
                 for(let i=1; i<=20; i++) {
-                    const price = 110 + (i*10);
+                    const price = 100 + (i * 12);
                     dishes += `
                         <div class="dish-card">
                             <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=200" class="dish-img">
                             <div style="flex:1">
-                                <h4 style="font-size:14px; font-weight:700;">${hotel.name.split(' ')[0]} Spec. #${i}</h4>
-                                <b style="color:var(--gold)">₹${price}</b>
+                                <h4 style="font-size:15px; font-weight:800;">${hotel.name.split(' ')[0]} Spec. #${i}</h4>
+                                <b style="color:var(--gold); font-size:18px;">₹${price}</b>
                             </div>
                             <button class="add-btn" onclick="app.add('${hotel.name.split(' ')[0]} #${i}', ${price})">ADD +</button>
                         </div>
                     `;
                 }
                 document.getElementById('menu-page').innerHTML = `
-                    <div style="padding:20px; background:var(--black); color:white; display:flex; align-items:center; gap:15px;">
-                        <i class="fa fa-arrow-left" onclick="app.nav('home-page')"></i>
-                        <h2 style="font-size:18px;">${hotel.name}</h2>
+                    <div style="padding:25px; background:var(--black); color:white; border-radius:0 0 35px 35px;">
+                        <i class="fa fa-chevron-left" onclick="app.nav('home-page')" style="font-size:22px; color:var(--gold); margin-bottom:15px; display:block;"></i>
+                        <h2 style="font-size:26px; font-weight:900;">${hotel.name}</h2>
                     </div>
                     <div class="container">${dishes}</div>
                 `;
@@ -222,11 +286,11 @@
             renderCart() {
                 const box = document.getElementById('cart-items');
                 const val = document.getElementById('total-val');
-                if(this.cart.length === 0) { box.innerHTML = "Bag is empty!"; val.innerHTML = ""; return; }
+                if(this.cart.length === 0) { box.innerHTML = "<p style='text-align:center;'>Bag is empty!</p>"; val.innerHTML = ""; return; }
                 box.innerHTML = this.cart.map((item, i) => `
-                    <div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #eee; padding-bottom:8px;">
-                        <div><b>${item.n}</b><br><small>${item.h}</small></div>
-                        <b>₹${item.p} <i class="fa fa-trash" style="color:red; margin-left:12px;" onclick="app.remove(${i})"></i></b>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+                        <div><b>${item.n}</b><br><small style="color:#777;">${item.h}</small></div>
+                        <b style="font-size:18px;">₹${item.p} <i class="fa-solid fa-trash-can" style="color:#ff4d4d; margin-left:15px;" onclick="app.remove(${i})"></i></b>
                     </div>
                 `).join('');
                 val.innerText = `Total: ₹${this.cart.reduce((s, i) => s + i.p, 0)}`;
@@ -236,10 +300,10 @@
 
             placeOrder() {
                 const addr = document.getElementById('address').value;
-                if(!addr) return alert("Bhai address likho!");
+                if(!addr) return alert("Bhai, address likhna zaroori hai!");
                 const items = this.cart.map(i => `• ${i.n} (${i.h}) - ₹${i.p}`).join('\n');
                 const total = this.cart.reduce((s, i) => s + i.p, 0);
-                const msg = `*GenZfoods Ajara - ORDER*\n---\n*Items:*\n${items}\n\n*Total:* ₹${total}\n*Address:* ${addr}\n*Location:* ${this.loc}\n\n_Bhai QR code bhej do payment ke liye!_`;
+                const msg = `*GenZfoods Ajara ORDER*\n---\n*Items:*\n${items}\n\n*Total:* ₹${total}\n*Address:* ${addr}\n*Live Location:* ${this.userLoc}\n\n_Please send me the QR code for payment!_`;
                 window.open(`https://wa.me/917757007795?text=${encodeURIComponent(msg)}`);
             }
         };
